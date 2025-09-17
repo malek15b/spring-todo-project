@@ -22,11 +22,9 @@ class TodoServiceTest {
         String id = UUID.randomUUID().toString();
         Mockito.when(idService.randomId()).thenReturn(id);
         Todo todo = new Todo(null,"test", "open");
-
         //WHEN
         Todo newTodo = service.upsert(todo);
         //THEN
-
         Mockito.verify(idService).randomId();
         assertEquals(id, newTodo.id());
     }
