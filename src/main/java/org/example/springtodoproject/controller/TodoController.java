@@ -5,6 +5,7 @@ import org.example.springtodoproject.model.Todo;
 import org.example.springtodoproject.model.TodoDto;
 import org.example.springtodoproject.service.TodoService;
 import org.example.springtodoproject.service.UndoRedoService;
+import org.example.springtodoproject.service.UndoRedoStackService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class TodoController {
 
     private final TodoService todoService;
-    private final UndoRedoService undoRedoService;
+    private final UndoRedoStackService undoRedoStackService;
 
     @GetMapping
     public List<Todo> getTodos() {
@@ -36,7 +37,7 @@ public class TodoController {
     @PutMapping("/{id}")
     public Todo updateTodo(@PathVariable String id, @RequestBody TodoDto todoDto) {
         Todo todo = todoDto.toTodo(id);
-        undoRedoService.init(todo);
+        undoRedoStackService.init(todo);
         return todoService.upsert(todo);
     }
 
@@ -47,11 +48,11 @@ public class TodoController {
 
     @GetMapping("/undo")
     public void undo() {
-        undoRedoService.undo();
+        undoRedoStackService.undo();
     }
 
     @GetMapping("/redo")
     public void redo() {
-        undoRedoService.redo();
+        undoRedoStackService.redo();
     }
 }
