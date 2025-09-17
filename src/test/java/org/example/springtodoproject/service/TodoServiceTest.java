@@ -1,5 +1,6 @@
 package org.example.springtodoproject.service;
 
+import org.example.springtodoproject.model.Status;
 import org.example.springtodoproject.model.Todo;
 import org.example.springtodoproject.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class TodoServiceTest {
         //GIVEN
         String id = UUID.randomUUID().toString();
         Mockito.when(idService.randomId()).thenReturn(id);
-        Todo todo = new Todo(null,"test", "open");
+        Todo todo = new Todo(null,"test", Status.OPEN);
         //WHEN
         Todo newTodo = service.upsert(todo);
         //THEN
