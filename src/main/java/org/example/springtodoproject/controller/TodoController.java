@@ -2,6 +2,7 @@ package org.example.springtodoproject.controller;
 
 import lombok.AllArgsConstructor;
 import org.example.springtodoproject.model.Todo;
+import org.example.springtodoproject.model.TodoDto;
 import org.example.springtodoproject.service.TodoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +21,24 @@ public class TodoController {
     }
 
     @PostMapping
-    public Todo addTodo(@RequestBody Todo todo){
+    public Todo addTodo(@RequestBody TodoDto todoDto){
+        Todo todo = todoDto.toTodo(null);
         return todoService.upsert(todo);
     }
 
     @GetMapping("/{id}")
     public Todo getTodo(@PathVariable String id){
         return todoService.get(id);
+    }
+
+    @PutMapping("/{id}")
+    public Todo updateTodo(@PathVariable String id, @RequestBody TodoDto todoDto){
+        Todo todo = todoDto.toTodo(id);
+        return todoService.upsert(todo);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTodo(@PathVariable String id){
+        todoService.remove(id);
     }
 }

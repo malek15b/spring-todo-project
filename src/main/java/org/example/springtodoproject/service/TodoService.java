@@ -6,7 +6,6 @@ import org.example.springtodoproject.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +27,9 @@ public class TodoService {
 
     public Todo get(String id) {
         return todoRepository.findById(id).orElse(null);
+    }
+
+    public void remove(String id) {
+        todoRepository.deleteById(id);
     }
 }
