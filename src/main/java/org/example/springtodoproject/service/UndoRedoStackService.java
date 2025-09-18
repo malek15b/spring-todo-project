@@ -1,5 +1,6 @@
 package org.example.springtodoproject.service;
 
+import lombok.Getter;
 import org.example.springtodoproject.model.Todo;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,9 @@ public class UndoRedoStackService {
     private final Deque<Todo> undoStack = new ArrayDeque<>();
     private final Deque<Todo> redoStack = new ArrayDeque<>();
     private final TodoService todoService;
+
+    @Getter
+    private Todo currentTodo;
 
     public UndoRedoStackService(TodoService todoService) {
         this.todoService = todoService;
@@ -29,6 +33,7 @@ public class UndoRedoStackService {
         redoStack.push(current);
 
         Todo previous = undoStack.pop();
+        this.currentTodo = previous;
         todoService.upsert(previous);
     }
 
@@ -40,6 +45,8 @@ public class UndoRedoStackService {
         undoStack.push(current);
 
         Todo next = redoStack.pop();
+        this.currentTodo = next;
         todoService.upsert(next);
     }
+
 }
