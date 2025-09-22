@@ -29,6 +29,10 @@ public class TodoService {
         return todoRepository.findById(id).orElse(null);
     }
 
+    public Boolean exist(String id) {
+        return todoRepository.existsById(id);
+    }
+
     public void remove(String id) {
         todoRepository.deleteById(id);
     }
