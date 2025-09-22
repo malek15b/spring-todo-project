@@ -25,7 +25,10 @@ public class ChatGPTService {
     }
 
     public String checkSpelling(String text) {
-        String message = "true/false Response - Dieser Text auf Rechtschreibfehler überprüfen: '" + text +"'";
+        String message = "Antworte nur mit 'true' oder 'false'. " +
+                "Gib 'true' zurück, wenn der folgende Text keine Rechtschreibfehler enthält, " +
+                "und 'false', wenn er mindestens einen Rechtschreibfehler enthält: '" + text + "'";
+
         OpenAiRequest request = this.getBody(message);
         return this.restClient.post()
                 .body(request)
