@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class ChatGPTService {
 
-    private static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
+    public static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
     private final RestClient restClient;
     private static final String MODEL_GPT5 = "gpt-4o-mini";
 

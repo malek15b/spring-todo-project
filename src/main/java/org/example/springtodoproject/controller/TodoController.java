@@ -56,10 +56,17 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public Todo updateTodo(@PathVariable String id, @RequestBody TodoDto todoDto) {
+    public Todo updateTodo(@PathVariable String id, @RequestBody TodoDto todoDto) throws SpellingException {
         if (!todoService.exist(id)) {
             throw new NoSuchElementException("Id Not Found");
         }
+        String text = todoDto.description();
+        String res = chatGPTService.checkSpelling(text);
+
+        if (!Boolean.parseBoolean(res)) {
+            throw new SpellingException(text);
+        }
+
         Todo todo = todoDto.toTodo(id);
         undoRedoStackService.init(todo);
         return todoService.upsert(todo);
